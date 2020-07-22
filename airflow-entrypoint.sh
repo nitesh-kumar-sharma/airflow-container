@@ -13,10 +13,9 @@ sed -i 's/${LOAD_EXAMPLES}/'"${LOAD_EXAMPLES}"'/g' ~/airflow/airflow.cfg
 sed -i 's/${DEFAULT_QUEUE}/'"${DEFAULT_QUEUE}"'/g' ~/airflow/airflow.cfg
 sed -i 's|${RESULT_BACKEND}|'"${RESULT_BACKEND}"'|g' ~/airflow/airflow.cfg
 
-airflow initdb
-
-nohup airflow webserver $* >> ~/airflow/logs/webserver.logs &
-nohup airflow worker $* >> ~/airflow/logs/worker.logs &
+nohup airflow initdb >> ~/airflow/logs/initdb.logs &
+nohup airflow webserver >> ~/airflow/logs/webserver.logs &
+nohup airflow worker >> ~/airflow/logs/worker.logs &
 nohup airflow scheduler >> ~/airflow/logs/scheduler.logs &
 nohup airflow flower >> ~/airflow/logs/flower.logs &
 
