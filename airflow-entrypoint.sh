@@ -14,9 +14,13 @@ sed -i 's/${DEFAULT_QUEUE}/'"${DEFAULT_QUEUE}"'/g' ~/airflow/airflow.cfg
 sed -i 's|${RESULT_BACKEND}|'"${RESULT_BACKEND}"'|g' ~/airflow/airflow.cfg
 
 nohup airflow initdb >> ~/airflow/logs/initdb.logs &
+sleep 5
 nohup airflow webserver >> ~/airflow/logs/webserver.logs &
+sleep 2
 nohup airflow worker >> ~/airflow/logs/worker.logs &
+sleep 2
 nohup airflow scheduler >> ~/airflow/logs/scheduler.logs &
+sleep 2
 nohup airflow flower >> ~/airflow/logs/flower.logs &
 
 if [[ -n $1 ]]; then
