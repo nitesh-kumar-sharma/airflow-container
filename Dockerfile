@@ -8,7 +8,8 @@ ENV	AIRFLOW_HOME=~/airflow \
 	SQL_ALCHEMY_CONN=${SQL_ALCHEMY_CONN:-sqlite:////usr/local/airflow/airflow.db} \
 	LOAD_EXAMPLES=${LOAD_EXAMPLES:-false} \
 	DEFAULT_QUEUE=${DEFAULT_QUEUE:-default} \
-	RESULT_BACKEND=${RESULT_BACKEND}
+	RESULT_BACKEND=${RESULT_BACKEND} \
+	DAG_SCAN_INTERVAL=${DAG_SCAN_INTERVAL:-300}
 	
 RUN pip install apache-airflow[postgres,rabbitmq,celery,kubernetes] && \
 	echo "export AIRFLOW_HOME=${AIRFLOW_HOME}" \
@@ -16,7 +17,8 @@ RUN pip install apache-airflow[postgres,rabbitmq,celery,kubernetes] && \
 	echo "export SQL_ALCHEMY_CONN=${SQL_ALCHEMY_CONN}" \
 	echo "export LOAD_EXAMPLES=${LOAD_EXAMPLES}" \
 	echo "export DEFAULT_QUEUE=${DEFAULT_QUEUE}" \
-	echo "export RESULT_BACKEND=${RESULT_BACKEND}"
+	echo "export RESULT_BACKEND=${RESULT_BACKEND}" \
+	echo "export DAG_SCAN_INTERVAL=${DAG_SCAN_INTERVAL}"
 	  
 ADD ./airflow-entrypoint.sh /opt/init/airflow/
 ADD ./airflow.cfg /opt/init/airflow/

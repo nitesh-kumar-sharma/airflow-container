@@ -12,6 +12,8 @@ sed -i 's|${BROKER_URL}|'"${BROKER_URL}"'|g' ~/airflow/airflow.cfg
 sed -i 's/${LOAD_EXAMPLES}/'"${LOAD_EXAMPLES}"'/g' ~/airflow/airflow.cfg
 sed -i 's/${DEFAULT_QUEUE}/'"${DEFAULT_QUEUE}"'/g' ~/airflow/airflow.cfg
 sed -i 's|${RESULT_BACKEND}|'"${RESULT_BACKEND}"'|g' ~/airflow/airflow.cfg
+sed -i 's|${DAG_SCAN_INTERVAL}|'"${DAG_SCAN_INTERVAL}"'|g' ~/airflow/airflow.cfg
+
 
 nohup airflow initdb >> ~/airflow/logs/initdb.logs &
 sleep 5
