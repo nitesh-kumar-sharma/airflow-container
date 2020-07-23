@@ -4,21 +4,40 @@ LABEL MAINTAINER="Nitesh K. Sharma <sharma.nitesh590@gmail.com>"
 
 ENV PATH=$PATH:/opt/init/airflow/
 ENV	AIRFLOW_HOME=~/airflow \
+	NODE_TYPE=${NODE_TYPE:-master} \
 	EXECUTOR=${EXECUTOR:-SequentialExecutor} \
 	SQL_ALCHEMY_CONN=${SQL_ALCHEMY_CONN:-sqlite:////usr/local/airflow/airflow.db} \
 	LOAD_EXAMPLES=${LOAD_EXAMPLES:-false} \
 	DEFAULT_QUEUE=${DEFAULT_QUEUE:-default} \
 	RESULT_BACKEND=${RESULT_BACKEND} \
 	DAG_SCAN_INTERVAL=${DAG_SCAN_INTERVAL:-300}
+
+#Woker env	
+ENV	WORKER_CONTAINER_REPO=${WORKER_CONTAINER_REPO} \
+	WORKER_CONTAINER_TAG=${WORKER_CONTAINER_TAG} \
+	KUBE_NAMESPACE=${KUBE_NAMESPACE:-default} \
+	WORKER_SERVICE_ACCOUNT_NAME=${WORKER_SERVICE_ACCOUNT_NAME}
+
+#git sync env
+ENV	GIT_REPO=${GIT_REPO} \
+	GIT_BRANCH=${GIT_BRANCH:-master} \
+	GIT_SUB_PATH=${GIT_SUB_PATH} \
+	GIT_USER=${GIT_SUB_PATH} \
+	GIT_PASS=${GIT_SUB_PATH}
 	
-RUN pip install apache-airflow[postgres,rabbitmq,celery,kubernetes] && \
+RUN pip install apache-airflow[postgres,rabbitmq,celery,kubernetes,crypto,postgres,hive,jdbc,mysql] && \
 	echo "export AIRFLOW_HOME=${AIRFLOW_HOME}" \
+	echo "export NODE_TYPE=${NODE_TYPE}" \
 	echo "export EXECUTOR=${EXECUTOR}" \
 	echo "export SQL_ALCHEMY_CONN=${SQL_ALCHEMY_CONN}" \
 	echo "export LOAD_EXAMPLES=${LOAD_EXAMPLES}" \
 	echo "export DEFAULT_QUEUE=${DEFAULT_QUEUE}" \
 	echo "export RESULT_BACKEND=${RESULT_BACKEND}" \
-	echo "export DAG_SCAN_INTERVAL=${DAG_SCAN_INTERVAL}"
+	echo "export DAG_SCAN_INTERVAL=${DAG_SCAN_INTERVAL}" \
+	echo "export WORKER_CONTAINER_REPO=${WORKER_CONTAINER_REPO}" \
+	echo "export WORKER_CONTAINER_TAG=${WORKER_CONTAINER_TAG}" \
+	echo "export KUBE_NAMESPACE=${KUBE_NAMESPACE:-default}" \
+	echo "export WORKER_SERVICE_ACCOUNT_NAME=${WORKER_SERVICE_ACCOUNT_NAME}"
 	  
 ADD ./airflow-entrypoint.sh /opt/init/airflow/
 ADD ./airflow.cfg /opt/init/airflow/
