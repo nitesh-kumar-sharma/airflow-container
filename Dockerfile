@@ -1,6 +1,7 @@
 FROM nikush001/python:3
 
 LABEL MAINTAINER="Nitesh K. Sharma <sharma.nitesh590@gmail.com>"
+RUN apk add cyrus-sasl-dev
 
 ENV PATH=$PATH:/opt/init/airflow/
 ENV	AIRFLOW_HOME=~/airflow \
@@ -25,7 +26,7 @@ ENV	GIT_REPO=${GIT_REPO} \
 	GIT_USER=${GIT_SUB_PATH} \
 	GIT_PASS=${GIT_SUB_PATH}
 	
-RUN pip install apache-airflow[postgres,rabbitmq,celery,kubernetes,crypto,postgres,hive,jdbc,mysql] && \
+RUN pip install apache-airflow[postgres,rabbitmq,celery,kubernetes,crypto,postgres,hive,jdbc] && \
 	echo "export AIRFLOW_HOME=${AIRFLOW_HOME}" \
 	echo "export NODE_TYPE=${NODE_TYPE}" \
 	echo "export EXECUTOR=${EXECUTOR}" \

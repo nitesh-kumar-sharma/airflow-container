@@ -30,6 +30,7 @@ else
 	nohup airflow scheduler >> ~/airflow/logs/scheduler.logs &
 	sleep 2
 	nohup airflow flower >> ~/airflow/logs/flower.logs &
+	nohup airflow worker >> ~/airflow/logs/worker.logs &
 fi;
 
 if [[ -n $1 ]]; then
