@@ -6,6 +6,8 @@ RUN apk add cyrus-sasl-dev
 ENV PATH=$PATH:/opt/init/airflow/
 ENV	AIRFLOW_HOME=~/airflow \
 	NODE_TYPE=${NODE_TYPE:-master} \
+	DAG_DIR=${DAG_DIR:-~/airflow/dags} \
+	LOG_DIR=${LOG_DIR:-~/airflow/logs} \
 	EXECUTOR=${EXECUTOR:-SequentialExecutor} \
 	SQL_ALCHEMY_CONN=${SQL_ALCHEMY_CONN:-sqlite:////usr/local/airflow/airflow.db} \
 	LOAD_EXAMPLES=${LOAD_EXAMPLES:-false} \
@@ -26,7 +28,8 @@ ENV	GIT_REPO=${GIT_REPO} \
 	GIT_USER=${GIT_SUB_PATH} \
 	GIT_PASS=${GIT_SUB_PATH}
 	
-RUN pip install apache-airflow[postgres,rabbitmq,celery,kubernetes,crypto,postgres,hive,jdbc] && \
+RUN mkdir -p ${DAG_DIR} ${LOG_DIR} && \
+	pip install apache-airflow[postgres,rabbitmq,celery,kubernetes,crypto,postgres,hive,jdbc] && \
 	echo "export AIRFLOW_HOME=${AIRFLOW_HOME}" \
 	echo "export NODE_TYPE=${NODE_TYPE}" \
 	echo "export EXECUTOR=${EXECUTOR}" \
@@ -38,7 +41,9 @@ RUN pip install apache-airflow[postgres,rabbitmq,celery,kubernetes,crypto,postgr
 	echo "export WORKER_CONTAINER_REPO=${WORKER_CONTAINER_REPO}" \
 	echo "export WORKER_CONTAINER_TAG=${WORKER_CONTAINER_TAG}" \
 	echo "export KUBE_NAMESPACE=${KUBE_NAMESPACE:-default}" \
-	echo "export WORKER_SERVICE_ACCOUNT_NAME=${WORKER_SERVICE_ACCOUNT_NAME}"
+	echo "export WORKER_SERVICE_ACCOUNT_NAME=${WORKER_SERVICE_ACCOUNT_NAME}" \
+	echo "export LOG_DIR=${LOG_DIR}" \
+	echo "export LOG_DIR=${DAG_DIR}"
 	  
 ADD ./airflow-entrypoint.sh /opt/init/airflow/
 ADD ./airflow.cfg /opt/init/airflow/

@@ -13,6 +13,8 @@ sed -i 's/${LOAD_EXAMPLES}/'"${LOAD_EXAMPLES}"'/g' ~/airflow/airflow.cfg
 sed -i 's/${DEFAULT_QUEUE}/'"${DEFAULT_QUEUE}"'/g' ~/airflow/airflow.cfg
 sed -i 's|${RESULT_BACKEND}|'"${RESULT_BACKEND}"'|g' ~/airflow/airflow.cfg
 sed -i 's|${DAG_SCAN_INTERVAL}|'"${DAG_SCAN_INTERVAL}"'|g' ~/airflow/airflow.cfg
+sed -i 's|${DAG_DIR}|'"${DAG_DIR}"'|g' ~/airflow/airflow.cfg
+sed -i 's|${LOG_DIR}|'"${LOG_DIR}"'|g' ~/airflow/airflow.cfg
 
 if [[ "${NODE_TYPE}" == "worker" ]];then
 	nohup airflow worker >> ~/airflow/logs/worker.logs &
