@@ -16,6 +16,13 @@ sed -i 's|${DAG_SCAN_INTERVAL}|'"${DAG_SCAN_INTERVAL}"'|g' ~/airflow/airflow.cfg
 sed -i 's|${DAG_DIR}|'"${DAG_DIR}"'|g' ~/airflow/airflow.cfg
 sed -i 's|${LOG_DIR}|'"${LOG_DIR}"'|g' ~/airflow/airflow.cfg
 
+#git cofiguration update for k8 - gitsync
+sed -i 's|${GIT_REPO}|'"${GIT_REPO}"'|g' ~/airflow/airflow.cfg
+sed -i 's|${GIT_BRANCH}|'"${GIT_BRANCH}"'|g' ~/airflow/airflow.cfg
+sed -i 's|${GIT_SUB_PATH}|'"${GIT_SUB_PATH}"'|g' ~/airflow/airflow.cfg
+sed -i 's|${GIT_USER}|'"${GIT_USER}"'|g' ~/airflow/airflow.cfg
+sed -i 's|${GIT_PASS}|'"${GIT_PASS}"'|g' ~/airflow/airflow.cfg
+
 if [[ "${NODE_TYPE}" == "worker" ]];then
 	nohup airflow worker >> ~/airflow/logs/worker.logs &
 elif [[ "${NODE_TYPE}" == "scheduler" ]];then

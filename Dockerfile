@@ -1,4 +1,4 @@
-FROM nikush001/python:3
+	FROM nikush001/python:3
 
 LABEL MAINTAINER="Nitesh K. Sharma <sharma.nitesh590@gmail.com>"
 RUN apk add cyrus-sasl-dev
@@ -25,8 +25,8 @@ ENV	WORKER_CONTAINER_REPO=${WORKER_CONTAINER_REPO} \
 ENV	GIT_REPO=${GIT_REPO} \
 	GIT_BRANCH=${GIT_BRANCH:-master} \
 	GIT_SUB_PATH=${GIT_SUB_PATH} \
-	GIT_USER=${GIT_SUB_PATH} \
-	GIT_PASS=${GIT_SUB_PATH}
+	GIT_USER=${GIT_USER} \
+	GIT_PASS=${GIT_PASS}
 	
 RUN mkdir -p ${DAG_DIR} ${LOG_DIR} && \
 	pip install apache-airflow[postgres,rabbitmq,celery,kubernetes,crypto,postgres,hive,jdbc] && \
@@ -43,7 +43,12 @@ RUN mkdir -p ${DAG_DIR} ${LOG_DIR} && \
 	echo "export KUBE_NAMESPACE=${KUBE_NAMESPACE:-default}" \
 	echo "export WORKER_SERVICE_ACCOUNT_NAME=${WORKER_SERVICE_ACCOUNT_NAME}" \
 	echo "export LOG_DIR=${LOG_DIR}" \
-	echo "export LOG_DIR=${DAG_DIR}"
+	echo "export LOG_DIR=${DAG_DIR}" \
+	echo "export GIT_REPO=${GIT_REPO}" \
+	echo "export GIT_BRANCH=${GIT_BRANCH:-master}" \
+	echo "export GIT_SUB_PATH=${GIT_SUB_PATH}" \
+	echo "export GIT_USER=${GIT_USER}" \
+	echo "export GIT_PASS=${GIT_PASS}"
 	  
 ADD ./airflow-entrypoint.sh /opt/init/airflow/
 ADD ./airflow.cfg /opt/init/airflow/
