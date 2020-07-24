@@ -43,7 +43,7 @@ RUN mkdir -p ${DAG_DIR} ${LOG_DIR} && \
 	echo "export KUBE_NAMESPACE=${KUBE_NAMESPACE:-default}" \
 	echo "export WORKER_SERVICE_ACCOUNT_NAME=${WORKER_SERVICE_ACCOUNT_NAME}" \
 	echo "export LOG_DIR=${LOG_DIR}" \
-	echo "export LOG_DIR=${DAG_DIR}" \
+	echo "export DAG_DIR=${DAG_DIR}" \
 	echo "export GIT_REPO=${GIT_REPO}" \
 	echo "export GIT_BRANCH=${GIT_BRANCH:-master}" \
 	echo "export GIT_SUB_PATH=${GIT_SUB_PATH}" \
