@@ -6,22 +6,26 @@ airflow --help
 
 cp /opt/init/airflow/airflow.cfg ~/airflow/
 
-sed -i 's/${EXECUTOR}/'"${EXECUTOR}"'/g' ~/airflow/airflow.cfg
-sed -i 's|${SQL_ALCHEMY_CONN}|'"${SQL_ALCHEMY_CONN}"'|g' ~/airflow/airflow.cfg
-sed -i 's|${BROKER_URL}|'"${BROKER_URL}"'|g' ~/airflow/airflow.cfg
-sed -i 's/${LOAD_EXAMPLES}/'"${LOAD_EXAMPLES}"'/g' ~/airflow/airflow.cfg
-sed -i 's/${DEFAULT_QUEUE}/'"${DEFAULT_QUEUE}"'/g' ~/airflow/airflow.cfg
-sed -i 's|${RESULT_BACKEND}|'"${RESULT_BACKEND}"'|g' ~/airflow/airflow.cfg
-sed -i 's|${DAG_SCAN_INTERVAL}|'"${DAG_SCAN_INTERVAL}"'|g' ~/airflow/airflow.cfg
-sed -i 's|${DAG_DIR}|'"${DAG_DIR}"'|g' ~/airflow/airflow.cfg
-sed -i 's|${LOG_DIR}|'"${LOG_DIR}"'|g' ~/airflow/airflow.cfg
+if [[ "$SET_ENV" == "Y" ]];then
 
-#git cofiguration update for k8 - gitsync
-sed -i 's|${GIT_REPO}|'"${GIT_REPO}"'|g' ~/airflow/airflow.cfg
-sed -i 's|${GIT_BRANCH}|'"${GIT_BRANCH}"'|g' ~/airflow/airflow.cfg
-sed -i 's|${GIT_SUB_PATH}|'"${GIT_SUB_PATH}"'|g' ~/airflow/airflow.cfg
-sed -i 's|${GIT_USER}|'"${GIT_USER}"'|g' ~/airflow/airflow.cfg
-sed -i 's|${GIT_PASS}|'"${GIT_PASS}"'|g' ~/airflow/airflow.cfg
+	sed -i 's/${EXECUTOR}/'"${EXECUTOR}"'/g' ~/airflow/airflow.cfg
+	sed -i 's|${SQL_ALCHEMY_CONN}|'"${SQL_ALCHEMY_CONN}"'|g' ~/airflow/airflow.cfg
+	sed -i 's|${BROKER_URL}|'"${BROKER_URL}"'|g' ~/airflow/airflow.cfg
+	sed -i 's/${LOAD_EXAMPLES}/'"${LOAD_EXAMPLES}"'/g' ~/airflow/airflow.cfg
+	sed -i 's/${DEFAULT_QUEUE}/'"${DEFAULT_QUEUE}"'/g' ~/airflow/airflow.cfg
+	sed -i 's|${RESULT_BACKEND}|'"${RESULT_BACKEND}"'|g' ~/airflow/airflow.cfg
+	sed -i 's|${DAG_SCAN_INTERVAL}|'"${DAG_SCAN_INTERVAL}"'|g' ~/airflow/airflow.cfg
+	sed -i 's|${DAG_DIR}|'"${DAG_DIR}"'|g' ~/airflow/airflow.cfg
+	sed -i 's|${LOG_DIR}|'"${LOG_DIR}"'|g' ~/airflow/airflow.cfg
+
+	#git cofiguration update for k8 - gitsync
+	sed -i 's|${GIT_REPO}|'"${GIT_REPO}"'|g' ~/airflow/airflow.cfg
+	sed -i 's|${GIT_BRANCH}|'"${GIT_BRANCH}"'|g' ~/airflow/airflow.cfg
+	sed -i 's|${GIT_SUB_PATH}|'"${GIT_SUB_PATH}"'|g' ~/airflow/airflow.cfg
+	sed -i 's|${GIT_USER}|'"${GIT_USER}"'|g' ~/airflow/airflow.cfg
+	sed -i 's|${GIT_PASS}|'"${GIT_PASS}"'|g' ~/airflow/airflow.cfg
+
+fi;
 
 if [[ "${NODE_TYPE}" == "worker" ]];then
 	nohup airflow worker >> ~/airflow/logs/worker.logs &
