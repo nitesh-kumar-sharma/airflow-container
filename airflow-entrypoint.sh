@@ -6,7 +6,7 @@ airflow --help
 
 cp /opt/init/airflow/airflow.cfg ~/airflow/
 
-if [[ "$SET_ENV" == "Y" ]];then
+if [[ "$MODE" == "cluster" ]];then
 
 	sed -i 's/${EXECUTOR}/'"${EXECUTOR}"'/g' ~/airflow/airflow.cfg
 	sed -i 's|${SQL_ALCHEMY_CONN}|'"${SQL_ALCHEMY_CONN}"'|g' ~/airflow/airflow.cfg

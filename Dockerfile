@@ -5,6 +5,7 @@ RUN apk add cyrus-sasl-dev
 
 ENV PATH=$PATH:/opt/init/airflow/
 ENV	AIRFLOW_HOME=~/airflow \
+	MODE=${MODE:-standalone} \
 	NODE_TYPE=${NODE_TYPE:-master} \
 	DAG_DIR=${DAG_DIR:-~/airflow/dags} \
 	LOG_DIR=${LOG_DIR:-~/airflow/logs} \
@@ -48,7 +49,8 @@ RUN mkdir -p ${DAG_DIR} ${LOG_DIR} && \
 	echo "export GIT_BRANCH=${GIT_BRANCH:-master}" \
 	echo "export GIT_SUB_PATH=${GIT_SUB_PATH}" \
 	echo "export GIT_USER=${GIT_USER}" \
-	echo "export GIT_PASS=${GIT_PASS}"
+	echo "export GIT_PASS=${GIT_PASS}" \
+	echo "export MODE=${MODE}"
 	  
 ADD ./airflow-entrypoint.sh /opt/init/airflow/
 ADD ./airflow.cfg /opt/init/airflow/
