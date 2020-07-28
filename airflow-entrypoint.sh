@@ -29,7 +29,7 @@ elif [[ "${NODE_TYPE}" == "flower" ]];then
 	airflow flower
 elif [[ "${NODE_TYPE}" == "init" ]];then
 	airflow initdb
-else
+elif [[ "${NODE_TYPE}" == "withWorker" ]];then
 	airflow initdb &
 	sleep 5
 	airflow webserver &
@@ -39,6 +39,14 @@ else
 	airflow flower &
 	sleep 2
 	airflow worker &
+else
+	airflow initdb &
+	sleep 5
+	airflow webserver &
+	sleep 2
+	airflow scheduler &
+	sleep 2
+	airflow flower &
 fi;	
 
 if [[ -n $1 ]]; then
