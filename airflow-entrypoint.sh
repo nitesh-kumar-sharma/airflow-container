@@ -30,15 +30,15 @@ elif [[ "${NODE_TYPE}" == "flower" ]];then
 elif [[ "${NODE_TYPE}" == "init" ]];then
 	airflow initdb
 else
-	nohup airflow initdb &
+	airflow initdb &
 	sleep 5
-	nohup airflow webserver &
+	airflow webserver &
 	sleep 2
-	nohup airflow scheduler &
+	airflow scheduler &
 	sleep 2
-	nohup airflow flower &
+	airflow flower &
 	sleep 2
-	nohup airflow worker &
+	airflow worker &
 fi;	
 
 if [[ -n $1 ]]; then
