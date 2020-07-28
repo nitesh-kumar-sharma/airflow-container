@@ -20,15 +20,15 @@ if [[ "${EXECUTOR}" -ne "KubernetesExecutor" ]];then
 fi;
 
 if [[ "${NODE_TYPE}" == "worker" ]];then
-	nohup airflow worker >> ~/airflow/logs/worker.logs &
+	airflow worker
 elif [[ "${NODE_TYPE}" == "scheduler" ]];then
-	nohup airflow webserver >> ~/airflow/logs/webserver.logs &
+	airflow scheduler
 elif [[ "${NODE_TYPE}" == "webserver" ]];then	
-	nohup airflow webserver >> ~/airflow/logs/webserver.logs &
+	airflow webserver
 elif [[ "${NODE_TYPE}" == "flower" ]];then		
-	nohup airflow flower >> ~/airflow/logs/flower.logs &
+	airflow flower
 elif [[ "${NODE_TYPE}" == "init" ]];then
-	nohup airflow initdb >> ~/airflow/logs/initdb.logs
+	airflow initdb
 else
 	nohup airflow initdb >> ~/airflow/logs/initdb.logs
 	sleep 5
