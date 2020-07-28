@@ -15,19 +15,6 @@ ENV	AIRFLOW_HOME=~/airflow \
 	DEFAULT_QUEUE=${DEFAULT_QUEUE:-default} \
 	RESULT_BACKEND=${RESULT_BACKEND} \
 	DAG_SCAN_INTERVAL=${DAG_SCAN_INTERVAL:-300}
-
-#Woker env	
-ENV	WORKER_CONTAINER_REPO=${WORKER_CONTAINER_REPO} \
-	WORKER_CONTAINER_TAG=${WORKER_CONTAINER_TAG} \
-	KUBE_NAMESPACE=${KUBE_NAMESPACE:-default} \
-	WORKER_SERVICE_ACCOUNT_NAME=${WORKER_SERVICE_ACCOUNT_NAME}
-
-#git sync env
-ENV	GIT_REPO=${GIT_REPO} \
-	GIT_BRANCH=${GIT_BRANCH:-master} \
-	GIT_SUB_PATH=${GIT_SUB_PATH} \
-	GIT_USER=${GIT_USER} \
-	GIT_PASS=${GIT_PASS}
 	
 RUN mkdir -p ${DAG_DIR} ${LOG_DIR} && \
 	pip install apache-airflow[postgres,rabbitmq,celery,kubernetes,crypto,postgres,hive,jdbc] && \
@@ -39,17 +26,8 @@ RUN mkdir -p ${DAG_DIR} ${LOG_DIR} && \
 	echo "export DEFAULT_QUEUE=${DEFAULT_QUEUE}" \
 	echo "export RESULT_BACKEND=${RESULT_BACKEND}" \
 	echo "export DAG_SCAN_INTERVAL=${DAG_SCAN_INTERVAL}" \
-	echo "export WORKER_CONTAINER_REPO=${WORKER_CONTAINER_REPO}" \
-	echo "export WORKER_CONTAINER_TAG=${WORKER_CONTAINER_TAG}" \
-	echo "export KUBE_NAMESPACE=${KUBE_NAMESPACE:-default}" \
-	echo "export WORKER_SERVICE_ACCOUNT_NAME=${WORKER_SERVICE_ACCOUNT_NAME}" \
 	echo "export LOG_DIR=${LOG_DIR}" \
 	echo "export DAG_DIR=${DAG_DIR}" \
-	echo "export GIT_REPO=${GIT_REPO}" \
-	echo "export GIT_BRANCH=${GIT_BRANCH:-master}" \
-	echo "export GIT_SUB_PATH=${GIT_SUB_PATH}" \
-	echo "export GIT_USER=${GIT_USER}" \
-	echo "export GIT_PASS=${GIT_PASS}" \
 	echo "export MODE=${MODE}"
 	  
 ADD ./airflow-entrypoint.sh /opt/init/airflow/
