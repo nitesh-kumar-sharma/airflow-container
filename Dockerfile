@@ -2,17 +2,13 @@ FROM nikush001/python:3
 LABEL MAINTAINER="Nitesh K. Sharma <sharma.nitesh590@gmail.com>"
 
 RUN apk add cyrus-sasl-dev
-RUN addgroup -S airflow && adduser -S airflow -G airflow
-
-# Tell docker that all future commands should run as the appuser user
-USER airflow
 
 ENV PATH=$PATH:/opt/init/airflow/
-ENV	AIRFLOW_HOME=~/airflow \
+ENV	AIRFLOW_HOME=/root/airflow \
 	MODE=${MODE:-standalone} \
 	NODE_TYPE=${NODE_TYPE:-master} \
-	DAG_DIR=${DAG_DIR:-~/airflow/dags} \
-	LOG_DIR=${LOG_DIR:-~/airflow/logs} \
+	DAG_DIR=${DAG_DIR:-/root/airflow/dags} \
+	LOG_DIR=${LOG_DIR:-/root/airflow/logs} \
 	EXECUTOR=${EXECUTOR:-SequentialExecutor} \
 	SQL_ALCHEMY_CONN=${SQL_ALCHEMY_CONN:-sqlite:////usr/local/airflow/airflow.db} \
 	LOAD_EXAMPLES=${LOAD_EXAMPLES:-false} \
