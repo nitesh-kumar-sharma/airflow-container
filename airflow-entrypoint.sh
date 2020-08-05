@@ -39,7 +39,7 @@ elif [[ "${NODE_TYPE}" == "withWorker" ]];then
 	airflow flower &
 	sleep 2
 	airflow worker &
-else
+elif [[ "${NODE_TYPE}" == "airflow-standalone" ]];then
 	airflow initdb &
 	sleep 5
 	airflow webserver &
@@ -47,7 +47,9 @@ else
 	airflow scheduler &
 	sleep 2
 	airflow flower &
-fi;	
+else
+	echo "not selected any sevice"
+fi;
 
 if [[ -n $1 ]]; then
   echo "docker container started in continous running mode"

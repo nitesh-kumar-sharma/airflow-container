@@ -1,7 +1,11 @@
-	FROM nikush001/python:3
-
+FROM nikush001/python:3
 LABEL MAINTAINER="Nitesh K. Sharma <sharma.nitesh590@gmail.com>"
+
 RUN apk add cyrus-sasl-dev
+RUN addgroup -S airflow && adduser -S airflow -G airflow
+
+# Tell docker that all future commands should run as the appuser user
+USER airflow
 
 ENV PATH=$PATH:/opt/init/airflow/
 ENV	AIRFLOW_HOME=~/airflow \
