@@ -4,11 +4,11 @@ LABEL MAINTAINER="Nitesh K. Sharma <sharma.nitesh590@gmail.com>"
 RUN apk add cyrus-sasl-dev
 
 ENV PATH=$PATH:/opt/init/airflow/
-ENV	AIRFLOW_HOME=/root/airflow \
+ENV	AIRFLOW_HOME=~/airflow \
 	MODE=${MODE:-standalone} \
 	NODE_TYPE=${NODE_TYPE:-master} \
-	DAG_DIR=${DAG_DIR} \
-	LOG_DIR=${LOG_DIR} \
+	DAG_DIR=${DAG_DIR:-~/airflow/dags} \
+	LOG_DIR=${LOG_DIR:~/airflow/logs} \
 	EXECUTOR=${EXECUTOR:-SequentialExecutor} \
 	SQL_ALCHEMY_CONN=${SQL_ALCHEMY_CONN:-sqlite:////usr/local/airflow/airflow.db} \
 	LOAD_EXAMPLES=${LOAD_EXAMPLES:-false} \
